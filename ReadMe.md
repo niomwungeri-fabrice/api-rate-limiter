@@ -2,6 +2,18 @@
 
 ## API Rate Limiter
 
+# Important Note:
+
+This application serves as a demonstrative prototype and, as such, certain features and functionalities typical of a production-ready application are not included. Users considering this demo for a production environment should be aware of these limitations and plan for additional development in areas such as:
+
+- Enhanced User Management: Implementing a more sophisticated system for handling user data, roles, and permissions.
+- Database Persistence: Replacing Redis with a persistent database solution for long-term record-keeping and robust data management.
+- Comprehensive Validations: Incorporating thorough input and data validation checks to ensure data integrity and application stability.
+- Robust Security Measures: Strengthening the application's security posture through measures like encryption, authentication, and authorization protocols.
+- Codebase Consistency: Ensuring uniformity and standardization across the entire codebase to improve maintainability and scalability.
+While this demo provides valuable insights into handling API overload and request management, it should be augmented with the above enhancements for a fully operational production deployment.
+
+
 ## Description
 
 This demo application showcases effective API overload management strategies, tailored for startups with limited server capacity. Utilizing Redis as a temporary storage solution, the application effectively tracks client requests to prevent system overloads. It addresses three critical scenarios:
