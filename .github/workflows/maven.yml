@@ -30,6 +30,5 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      # Your application needs to be configured to connect to Redis at 'localhost:6379'
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn clean install
