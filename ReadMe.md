@@ -20,7 +20,7 @@ of these limitations and plan for additional development in areas such as:
   While this demo provides valuable insights into handling API overload and request management, it should be augmented
   with the above enhancements for a fully operational production deployment.
 
-## Description
+## Project Description
 
 This demo application showcases effective API overload management strategies, tailored for startups with limited server
 capacity. Utilizing Redis as a temporary storage solution, the application effectively tracks client requests to prevent
