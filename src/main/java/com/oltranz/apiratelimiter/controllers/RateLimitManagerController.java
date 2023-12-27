@@ -1,7 +1,7 @@
 package com.oltranz.apiratelimiter.controllers;
 
-import com.oltranz.apiratelimiter.dto.UpgradePlanDTO;
-import com.oltranz.apiratelimiter.exceptions.ApiResponse;
+import com.oltranz.apiratelimiter.dtos.requests.UpgradePlanDTO;
+import com.oltranz.apiratelimiter.dtos.responses.ApiResponse;
 import com.oltranz.apiratelimiter.models.Client;
 import com.oltranz.apiratelimiter.services.PricingPlanService;
 import lombok.extern.slf4j.Slf4j;

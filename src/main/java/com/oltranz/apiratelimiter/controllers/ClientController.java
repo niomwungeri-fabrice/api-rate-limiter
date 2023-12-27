@@ -1,7 +1,7 @@
 package com.oltranz.apiratelimiter.controllers;
 
-import com.oltranz.apiratelimiter.dto.ClientDTO;
-import com.oltranz.apiratelimiter.exceptions.ApiResponse;
+import com.oltranz.apiratelimiter.dtos.requests.ClientDTO;
+import com.oltranz.apiratelimiter.dtos.responses.ApiResponse;
 import com.oltranz.apiratelimiter.models.Client;
 import com.oltranz.apiratelimiter.services.ClientService;
 import lombok.extern.slf4j.Slf4j;

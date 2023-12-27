@@ -1,6 +1,6 @@
 package com.oltranz.apiratelimiter.services;
 
-import com.oltranz.apiratelimiter.dto.UpgradePlanDTO;
+import com.oltranz.apiratelimiter.dtos.requests.UpgradePlanDTO;
 import com.oltranz.apiratelimiter.models.Client;
 import com.oltranz.apiratelimiter.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;

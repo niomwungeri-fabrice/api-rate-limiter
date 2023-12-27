@@ -89,6 +89,11 @@ bash
 - Upgrade Subscription Test: Tests if clients can upgrade their subscription plan.
 - Rate Limiting Test: Ensures that rate limiting works correctly under different subscription plans.
 
+## Deployment 
+1. Build docker image `docker build -t api-rate-limiter .`
+2. Push the image to docker hub `docker push niomwungeri/api-rate-limiter:latest`
+3. [Rander](https://render.com/) Will automatically pull from docker and run it, other it can always be triggered manually
+
 ## References:
 
 - [Oltranz](https://www.oltranz.com/)

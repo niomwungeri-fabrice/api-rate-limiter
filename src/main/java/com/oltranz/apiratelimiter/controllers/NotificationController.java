@@ -1,7 +1,7 @@
 package com.oltranz.apiratelimiter.controllers;
 
-import com.oltranz.apiratelimiter.dto.ClientRequestLoggerDTO;
-import com.oltranz.apiratelimiter.exceptions.ApiResponse;
+import com.oltranz.apiratelimiter.dtos.requests.ClientRequestLoggerDTO;
+import com.oltranz.apiratelimiter.dtos.responses.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.oltranz.apiratelimiter.dto;
+package com.oltranz.apiratelimiter.dtos.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientDTO {
-    private String name;
+public class ApiResponse {
+    private Object data;
+    private String message;
 }

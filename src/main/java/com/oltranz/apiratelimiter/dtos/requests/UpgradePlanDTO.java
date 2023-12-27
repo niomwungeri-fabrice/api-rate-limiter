@@ -1,4 +1,4 @@
-package com.oltranz.apiratelimiter.dto;
+package com.oltranz.apiratelimiter.dtos.requests;
 
 import com.oltranz.apiratelimiter.enums.SubscriptionPlan;
 import lombok.AllArgsConstructor;
