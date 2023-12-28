@@ -26,16 +26,16 @@ This demo application showcases effective API overload management strategies, ta
 capacity. Utilizing Redis as a temporary storage solution, the application effectively tracks client requests to prevent
 system overloads. It addresses three critical scenarios:
 
-*Client-Specific Rate Limiting*: Monitors and limits the number of requests from individual clients within a specified
+- *Client-Specific Rate Limiting*: Monitors and limits the number of requests from individual clients within a specified
 time window, ensuring fair resource allocation.
 
-*Monthly Quota Management*: Implements a monthly request quota for each client, preventing excessive usage and
+- *Monthly Quota Management*: Implements a monthly request quota for each client, preventing excessive usage and
 maintaining optimal system performance.
 
-*Global Request Throttling*: Oversees the total number of requests across the system, providing a safeguard against
+- *Global Request Throttling*: Oversees the total number of requests across the system, providing a safeguard against
 overall system overload.
 
-*Flexible Plan Management*: Enables clients to upgrade or change their subscription plans, thus adjusting their daily or
+- *Flexible Plan Management*: Enables clients to upgrade or change their subscription plans, thus adjusting their daily or
 monthly request capacity. This feature allows for scalable usage, catering to varying client needs and promoting
 efficient resource management.
 
