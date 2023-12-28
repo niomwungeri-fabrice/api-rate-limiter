@@ -18,7 +18,7 @@ public enum SubscriptionPlan {
     }
 
     public Long getBucketLimitPerMonth() {
-        return this.bucketLimit * 5;
+        return this.bucketLimit * Long.parseLong(ConfigProperties.getPlanMultiplier());
     }
 
 }

@@ -22,7 +22,7 @@ public class GlobalLimitInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         if (globalRateLimiterService.isLimitExceeded()) {
-            throw new RateLimitExceededException("maximum of 100 requests per minute is reached. please retry after 1 minute");
+            throw new RateLimitExceededException("maximum of 10 requests per minute is reached. please retry after 1 minute");
         }
         return true;
     }

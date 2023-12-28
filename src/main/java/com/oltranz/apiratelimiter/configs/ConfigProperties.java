@@ -12,6 +12,8 @@ public class ConfigProperties {
     @Value("${subscription.pro.plan}")
     private String proPlan;
 
+    @Value("${subscription.monthly.multiplier}")
+    private String planMultiplier;
 
     public ConfigProperties() {
         configProperties = this;
@@ -23,5 +25,9 @@ public class ConfigProperties {
 
     public static String getProPlan() {
         return configProperties.proPlan;
+    }
+
+    public static String getPlanMultiplier() {
+        return configProperties.planMultiplier;
     }
 }

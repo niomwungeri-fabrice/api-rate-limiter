@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Service
 public class GlobalRateLimiterService {
     private final AtomicInteger requestCount = new AtomicInteger(0);
-    private final int MAX_REQUESTS_PER_MINUTE = 100; // maximum of 100 requests per 60 seconds
+    private final int MAX_REQUESTS_PER_MINUTE = 10; // maximum of 100 requests per 60 seconds
 
     @Scheduled(fixedRate = 60000) // Resets every minute
     public void resetRequestCount() {
