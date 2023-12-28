@@ -49,6 +49,7 @@ essential resource for startups navigating the challenges of limited server reso
 * Example: Java version between 11 and 17
 * Spring Boot 3.x
 * Redis (for rate-limiting features)
+* Make sure you have copy `sample.env` to `.env` and adjust variable a appropriately
 
 ## Executing program
 

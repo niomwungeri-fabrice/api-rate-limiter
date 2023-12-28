@@ -14,6 +14,8 @@ public class ConfigProperties {
 
     @Value("${subscription.monthly.multiplier}")
     private String planMultiplier;
+    @Value("${max.request.per.minute}")
+    private String maxRequestPerMinute;
 
     public ConfigProperties() {
         configProperties = this;
@@ -29,5 +31,9 @@ public class ConfigProperties {
 
     public static String getPlanMultiplier() {
         return configProperties.planMultiplier;
+    }
+
+    public static String getMaxRequestPerMinute() {
+        return configProperties.maxRequestPerMinute;
     }
 }

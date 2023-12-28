@@ -1,9 +1,7 @@
 package com.oltranz.apiratelimiter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,17 +12,23 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ClientPlanIntegrationTests {
+class ApiRateLimiterApplicationTests {
+
     private static RedisTemplate<String, Object> redisTemplate;
 
     @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
     public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
-        ClientPlanIntegrationTests.redisTemplate = redisTemplate;
+        ApiRateLimiterApplicationTests.redisTemplate = redisTemplate;
     }
 
     @BeforeAll
@@ -32,15 +36,27 @@ public class ClientPlanIntegrationTests {
         redisTemplate.getConnectionFactory().getConnection().flushDb();
     }
 
+
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    @Test
+    @Order(1)
+    public void testSuccessfulRegistration() throws Exception {
+        String jsonPayload = "{\"name\": \"OLTRANZ LIMITED\"}";
 
-
+        mockMvc.perform(post("/clients/register")
+                        .contentType("application/json")
+                        .content(jsonPayload))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.data.clientId").exists())
+                .andExpect(jsonPath("$.data.name").value("OLTRANZ LIMITED"))
+                .andExpect(jsonPath("$.data.plan").value("SUBSCRIPTION_BASIC"))
+                .andExpect(jsonPath("$.message").value("Registration was done successfully"));
+    }
 
     @Test
+    @Order(2)
     public void testRateLimits() throws Exception {
         // Register User 1 and get clientId
         MvcResult resultUser1 = mockMvc.perform(post("/clients/register")
@@ -92,11 +108,31 @@ public class ClientPlanIntegrationTests {
                         .contentType("application/json")
                         .content("{\"title\":\"Test\",\"body\":\"Message\"}"))
                 .andExpect(status().isTooManyRequests());
-}
+    }
 
     private String getClientIdFromResponse(String jsonResponse) throws Exception {
         Map<String, Object> responseMap = objectMapper.readValue(jsonResponse, Map.class);
         Map<String, String> data = (Map<String, String>) responseMap.get("data");
         return data.get("clientId");
     }
+
+    @Test
+    @Order(3)
+    public void testRateLimiting() throws Exception {
+        String jsonPayload = "{\"name\": \"OLTRANZ LIMITED\"}";
+        for (int i = 0; i < 100; i++) {
+            mockMvc.perform(post("/clients/register")
+                    .contentType("application/json")
+                    .content(jsonPayload));
+        }
+
+        mockMvc.perform(post("/clients/register")
+                        .contentType("application/json")
+                        .content(jsonPayload))
+                .andExpect(status().isTooManyRequests())
+                .andExpect(jsonPath("$.data").value("maximum of requests per minute is reached. please retry after 1 minute"))
+                .andExpect(jsonPath("$.message").value("maximum of requests per minute is reached. please retry after 1 minute"));
+    }
+
+
 }

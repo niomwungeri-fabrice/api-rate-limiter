@@ -38,21 +38,18 @@ public class TokenBucketRateLimiterService {
     private Bucket getBucketForSecondRateLimit(Client client) {
         return secondRateLimitBuckets.computeIfAbsent(client.getClientId(), id -> {
             // Client-specific bucket initialization for per-second rate limiting
-            Bucket bucket = Bucket4j.builder()
+            return Bucket4j.builder()
                     .addLimit(Bandwidth.simple(client.getLimitPerMinute(), Duration.ofSeconds(60)))
                     .build();
-            log.info("==== initialize seconds bucket ===={}", bucket);
-            return bucket;
         });
     }
 
     private Bucket getBucketForMonthRateLimit(Client client) {
         return monthRateLimitBuckets.computeIfAbsent(client.getClientId(), id -> {
             // Client-specific bucket initialization for per-month rate limiting
-            Bucket bucket = Bucket4j.builder()
+            return Bucket4j.builder()
                     .addLimit(Bandwidth.simple(client.getLimitPerMonth(), Duration.ofDays(30)))
                     .build();
-            return bucket;
         });
     }
 
