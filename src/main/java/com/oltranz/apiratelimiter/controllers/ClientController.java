@@ -1,6 +1,6 @@
 package com.oltranz.apiratelimiter.controllers;
 
-import com.oltranz.apiratelimiter.dtos.requests.ClientDTO;
+import com.oltranz.apiratelimiter.dtos.requests.ClientRequestDTO;
 import com.oltranz.apiratelimiter.dtos.responses.ApiResponse;
 import com.oltranz.apiratelimiter.models.Client;
 import com.oltranz.apiratelimiter.services.ClientService;
@@ -30,12 +30,13 @@ public class ClientController {
     }
 
     @PostMapping("register")
-    ResponseEntity<?> notify(@RequestBody ClientDTO clientDTO) throws NoSuchAlgorithmException, IOException {
+    ResponseEntity<?> notify(@RequestBody ClientRequestDTO clientDTO) throws NoSuchAlgorithmException {
         Client client = clientService.handleClientRegistration(clientDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 ApiResponse.builder()
                         .data(client)
                         .message("Registration was done successfully")
+                        .status(HttpStatus.CREATED.value())
                         .build()
         );
     }

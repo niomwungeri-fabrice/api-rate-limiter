@@ -14,6 +14,7 @@ public class GlobalExceptionHandler {
                 ApiResponse.builder()
                         .data(ex.getMessage())
                         .message(ex.getMessage())
+                        .status(HttpStatus.BAD_REQUEST.value())
                         .build()
         );
     }
@@ -24,6 +25,7 @@ public class GlobalExceptionHandler {
                 ApiResponse.builder()
                         .data(ex.getMessage())
                         .message(ex.getMessage())
+                        .status(HttpStatus.TOO_MANY_REQUESTS.value())
                         .build()
         );
     }
@@ -34,6 +36,7 @@ public class GlobalExceptionHandler {
                 ApiResponse.builder()
                         .data(ex.getMessage())
                         .message(ex.getMessage())
+                        .status(HttpStatus.CONFLICT.value())
                         .build()
         );
     }

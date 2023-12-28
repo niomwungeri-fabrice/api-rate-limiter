@@ -44,7 +44,7 @@ class ApiRateLimiterRegistrationTests {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.data.clientId").exists())
                 .andExpect(jsonPath("$.data.name").value("OLTRANZ LIMITED"))
-                .andExpect(jsonPath("$.data.plan").value("SUBSCRIPTION_FREE"))
+                .andExpect(jsonPath("$.data.plan").value("SUBSCRIPTION_BASIC"))
                 .andExpect(jsonPath("$.message").value("Registration was done successfully"));
     }
 

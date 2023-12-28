@@ -8,14 +8,14 @@ This application serves as a demonstrative prototype and, as such, certain featu
 production-ready application are not included. Users considering this demo for a production environment should be aware
 of these limitations and plan for additional development in areas such as:
 
-- Enhanced User Management: Implementing a more sophisticated system for handling user data, roles, and permissions.
-- Database Persistence: Replacing Redis with a persistent database solution for long-term record-keeping and robust data
+- *Enhanced User Management*: Implementing a more sophisticated system for handling user data, roles, and permissions.
+- *Database Persistence*: Replacing Redis with a persistent database solution for long-term record-keeping and robust data
   management.
-- Comprehensive Validations: Incorporating thorough input and data validation checks to ensure data integrity and
+- *Comprehensive Validations*: Incorporating thorough input and data validation checks to ensure data integrity and
   application stability.
-- Robust Security Measures: Strengthening the application's security posture through measures like encryption,
+- *Robust Security Measures*: Strengthening the application's security posture through measures like encryption,
   authentication, and authorization protocols.
-- Codebase Consistency: Ensuring uniformity and standardization across the entire codebase to improve maintainability
+- *Codebase Consistency*: Ensuring uniformity and standardization across the entire codebase to improve maintainability
   and scalability.
   While this demo provides valuable insights into handling API overload and request management, it should be augmented
   with the above enhancements for a fully operational production deployment.
@@ -46,8 +46,8 @@ essential resource for startups navigating the challenges of limited server reso
 
 ## Dependencies
 
-* Example: Java <=17
-* Spring Boot 2.x
+* Example: Java version between 11 and 17
+* Spring Boot 3.x
 * Redis (for rate-limiting features)
 
 ## Executing program
@@ -66,7 +66,7 @@ cd api-rate-limiter
 How to run the automated tests for this system.
 
 ```
-./mvnw spring-boot:run
+mvn spring-boot:run
 ```
 
 ## API References
@@ -80,7 +80,7 @@ Explanation how to run the integration tests with examples.
 bash
 
 ```
-./mvnw test
+mvn test
 ```
 
 ## Testing Strategy

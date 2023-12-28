@@ -65,7 +65,7 @@ public class ClientPlanIntegrationTests {
         // Upgrade User 2 to Basic Plan
         mockMvc.perform(post("/rate/upgrade")
                 .contentType("application/json")
-                .content("{\"clientId\": \"" + clientIdUser2 + "\", \"plan\": \"SUBSCRIPTION_BASIC\"}"));
+                .content("{\"clientId\": \"" + clientIdUser2 + "\", \"plan\": \"SUBSCRIPTION_PRO\"}"));
 
         // Test Rate Limit for User 1 (Free Plan)
         for (int i = 0; i < 6; i++) {

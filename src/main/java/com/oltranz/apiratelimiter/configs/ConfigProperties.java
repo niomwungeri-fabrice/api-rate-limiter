@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 public class ConfigProperties {
     private static ConfigProperties configProperties;
 
-    @Value("${subscription.free.plan}")
-    private String freePlan;
     @Value("${subscription.basic.plan}")
     private String basicPlan;
     @Value("${subscription.pro.plan}")
@@ -25,9 +23,5 @@ public class ConfigProperties {
 
     public static String getProPlan() {
         return configProperties.proPlan;
-    }
-
-    public static String getFreePlan() {
-        return configProperties.freePlan;
     }
 }

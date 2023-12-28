@@ -17,11 +17,12 @@ public class NotificationController {
     @PostMapping("notify")
     ResponseEntity<?> notify(@RequestBody ClientRequestLoggerDTO clientRequestLoggerDTO) {
 
-        // TODO: actual call the notification service(sms|email|....)
+        // TODO: actual call the notification service providers(sms|email|....)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 ApiResponse.builder()
                         .data(clientRequestLoggerDTO)
+                        .status(HttpStatus.CREATED.value())
                         .message("notification was sent successfully")
                         .build()
         );

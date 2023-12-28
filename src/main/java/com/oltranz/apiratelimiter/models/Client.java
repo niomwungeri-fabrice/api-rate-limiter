@@ -14,5 +14,7 @@ public class Client {
     private String clientId;
     private String name;
     private SubscriptionPlan plan;
+    private long limitPerMinute;
+    private long limitPerMonth;
 
 }

@@ -14,5 +14,4 @@ public class ApiRateLimiterApplication {
         SpringApplication.run(ApiRateLimiterApplication.class, args);
     }
 
-
 }

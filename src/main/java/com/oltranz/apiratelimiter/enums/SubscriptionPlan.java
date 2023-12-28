@@ -4,9 +4,8 @@ import com.oltranz.apiratelimiter.configs.ConfigProperties;
 
 
 public enum SubscriptionPlan {
-    SUBSCRIPTION_FREE(Long.parseLong(ConfigProperties.getFreePlan())),
     SUBSCRIPTION_BASIC(Long.parseLong(ConfigProperties.getBasicPlan())),
-    SUBSCRIPTION_PROFESSIONAL(Long.parseLong(ConfigProperties.getProPlan()));
+    SUBSCRIPTION_PRO(Long.parseLong(ConfigProperties.getProPlan()));
 
     private final Long bucketLimit;
 
@@ -14,7 +13,7 @@ public enum SubscriptionPlan {
         this.bucketLimit = bucketLimit;
     }
 
-    public Long getBucketLimitPerSeconds() {
+    public Long getBucketLimitPerMinute() {
         return this.bucketLimit;
     }
 

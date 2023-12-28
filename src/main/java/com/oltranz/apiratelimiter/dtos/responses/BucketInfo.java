@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApiResponse {
-    private Object data;
-    private String message;
-    private int status;
+public class BucketInfo {
+    private long monthlyAvailable;
+    private long timeWindowAvailable;
+    private boolean monthlyAllowed;
+    private boolean timeWindowBasedAllowed;
 }

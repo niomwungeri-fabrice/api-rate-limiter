@@ -8,6 +8,9 @@ on:
 env:
   REDIS_HOST: localhost
   REDIS_PORT: 6379
+  BASIC_SIZE: 5
+  PRO_SIZE: 10
+  MONTHLY_LIMIT_MULTIPLIER: 5
 
 jobs:
   build:

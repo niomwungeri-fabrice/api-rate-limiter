@@ -1,6 +1,6 @@
 package com.oltranz.apiratelimiter.services;
 
-import com.oltranz.apiratelimiter.dtos.requests.ClientDTO;
+import com.oltranz.apiratelimiter.dtos.requests.ClientRequestDTO;
 import com.oltranz.apiratelimiter.enums.SubscriptionPlan;
 import com.oltranz.apiratelimiter.exceptions.ConflictException;
 import com.oltranz.apiratelimiter.models.Client;
@@ -22,11 +22,13 @@ public class ClientService {
         this.redisService = redisService;
     }
 
-    public Client handleClientRegistration(ClientDTO clientDTO) throws NoSuchAlgorithmException {
+    public Client handleClientRegistration(ClientRequestDTO clientDTO) throws NoSuchAlgorithmException {
         Client client = Client.builder()
                 .clientId(Util.generateUsername(clientDTO.getName()))
                 .name(clientDTO.getName())
-                .plan(SubscriptionPlan.SUBSCRIPTION_FREE) // initial state
+                .plan(SubscriptionPlan.SUBSCRIPTION_BASIC) // initial state
+                .limitPerMinute(SubscriptionPlan.SUBSCRIPTION_BASIC.getBucketLimitPerMinute())
+                .limitPerMonth(SubscriptionPlan.SUBSCRIPTION_BASIC.getBucketLimitPerMonth())
                 .build();
         // save to redis
         String data = redisService.getValue(Util.generateUsername(client.getName()));

@@ -1,5 +1,6 @@
 package com.oltranz.apiratelimiter.interceptors;
 
+import com.oltranz.apiratelimiter.dtos.responses.BucketInfo;
 import com.oltranz.apiratelimiter.exceptions.BadRequestException;
 import com.oltranz.apiratelimiter.exceptions.RateLimitExceededException;
 import com.oltranz.apiratelimiter.models.Client;
@@ -38,11 +39,16 @@ public class RateLimitInterceptor implements HandlerInterceptor {
         String data = redisService.getValue(clientId);
         Client client = Util.jsonToPojo(data, Client.class);
 
-        if (!rateLimiterService.allowRequestSeconds(client)) {
-            throw new RateLimitExceededException("too many requests per minute please wait 1 minute to try again or upgrade your limit");
+        BucketInfo bucketInfo = rateLimiterService.allowRequest(client);
+        response.addHeader("x-remaining-limit-per-month", String.valueOf(bucketInfo.getMonthlyAvailable()));
+        response.addHeader("x-remaining-limit-per-minute", String.valueOf(bucketInfo.getTimeWindowAvailable()));
+
+        if (!bucketInfo.isMonthlyAllowed()) {
+            throw new RateLimitExceededException("monthly limit has been exceeded");
         }
-        if (!rateLimiterService.allowRequestMonth(client)) {
-            throw new RateLimitExceededException("too many requests per month please wait the 30 days try again or upgrade your limit");
+
+        if (!bucketInfo.isTimeWindowBasedAllowed()) {
+            throw new RateLimitExceededException("time window limit has been exceeded");
         }
         return true;
     }

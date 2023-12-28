@@ -1,5 +1,6 @@
 package com.oltranz.apiratelimiter.services.limiters;
 
+import com.oltranz.apiratelimiter.dtos.responses.BucketInfo;
 import com.oltranz.apiratelimiter.models.Client;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
@@ -14,36 +15,54 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @Slf4j
-public class TokenBucketRateLimiterService  {
+public class TokenBucketRateLimiterService {
     private final Map<String, Bucket> secondRateLimitBuckets = new ConcurrentHashMap<>();
     private final Map<String, Bucket> monthRateLimitBuckets = new ConcurrentHashMap<>();
 
-    public boolean allowRequestSeconds(Client client) {
-        Bucket bucket = getBucketForSecondRateLimit(client.getClientId(), client.getPlan().getBucketLimitPerSeconds());
-        return bucket.tryConsume(1);
+
+    public BucketInfo allowRequest(Client client) {
+        Bucket secondBucket = getBucketForSecondRateLimit(client);
+        Bucket monthBucket = getBucketForMonthRateLimit(client);
+
+        boolean consumeTimeWindowBucket = secondBucket.tryConsume(1);
+        boolean consumeMonthlyBucket = monthBucket.tryConsume(1);
+
+        return BucketInfo.builder()
+                .timeWindowBasedAllowed(consumeTimeWindowBucket)
+                .monthlyAllowed(consumeMonthlyBucket)
+                .monthlyAvailable(monthBucket.getAvailableTokens())
+                .timeWindowAvailable(secondBucket.getAvailableTokens())
+                .build();
     }
 
-
-    public boolean allowRequestMonth(Client client) {
-        Bucket bucket = getBucketForMonthRateLimit(client.getClientId(), client.getPlan().getBucketLimitPerMonth());
-        return bucket.tryConsume(1);
-    }
-
-    private Bucket getBucketForSecondRateLimit(String clientId, long limit) {
-        return secondRateLimitBuckets.computeIfAbsent(clientId, id -> {
+    private Bucket getBucketForSecondRateLimit(Client client) {
+        return secondRateLimitBuckets.computeIfAbsent(client.getClientId(), id -> {
             // Client-specific bucket initialization for per-second rate limiting
-            return Bucket4j.builder()
-                    .addLimit(Bandwidth.simple(limit, Duration.ofMinutes(60)))
+            Bucket bucket = Bucket4j.builder()
+                    .addLimit(Bandwidth.simple(client.getLimitPerMinute(), Duration.ofSeconds(60)))
                     .build();
+            log.info("==== initialize seconds bucket ===={}", bucket);
+            return bucket;
         });
     }
 
-    private Bucket getBucketForMonthRateLimit(String clientId, long limit) {
-        return monthRateLimitBuckets.computeIfAbsent(clientId, id -> {
+    private Bucket getBucketForMonthRateLimit(Client client) {
+        return monthRateLimitBuckets.computeIfAbsent(client.getClientId(), id -> {
             // Client-specific bucket initialization for per-month rate limiting
-            return Bucket4j.builder()
-                    .addLimit(Bandwidth.simple(limit, Duration.ofDays(30)))
+            Bucket bucket = Bucket4j.builder()
+                    .addLimit(Bandwidth.simple(client.getLimitPerMonth(), Duration.ofDays(30)))
                     .build();
+            return bucket;
         });
+    }
+
+    public void updateClientRateLimit(Client client) {
+        // Remove old buckets
+        secondRateLimitBuckets.remove(client.getClientId());
+        monthRateLimitBuckets.remove(client.getClientId());
+
+        // Initialize new buckets with updated limits
+        getBucketForSecondRateLimit(client);
+        getBucketForMonthRateLimit(client);
     }
 }
