@@ -2,7 +2,7 @@
 
 ## API Rate Limiter
 
-# Important Note:
+# Disclaimer:
 
 This application serves as a demonstrative prototype and, as such, certain features and functionalities typical of a
 production-ready application are not included. Users considering this demo for a production environment should be aware
